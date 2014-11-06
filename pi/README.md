@@ -11,5 +11,7 @@ Also, one additional package is needed: `sudo apt-get install unclutter`
 
 ## TODO
 - Automate process to image a fresh Raspberry Pi with all of the above.
+ - http://computers.tutsplus.com/articles/how-to-clone-raspberry-pi-sd-cards-using-the-command-line-in-os-x--mac-59911
+ - http://sysmatt.blogspot.com/2014/08/backup-restore-customize-and-clone-your.html
 - Handle network connectivity issues
 - Integrate remote control
