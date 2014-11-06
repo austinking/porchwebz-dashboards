@@ -1,4 +1,4 @@
-== RaspberryPi display
+# RaspberryPi display
 
 This RaspberryPi will boot into a fullscreen kiosk style browser displaying our hosted dashboards.
 
@@ -9,5 +9,7 @@ Currently, three files contain custom configuration to support this implementati
 
 Also, one additional package is needed: `sudo apt-get install unclutter`
 
-=== Coming soon!
-Automated process to image a fresh RaspberryPi with all of the above.
+## TODO
+- Automate process to image a fresh RaspberryPi with all of the above.
+- Handle network connectivity issues
+- Integrate remote control
