@@ -1,0 +1,9 @@
+@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
+@xscreensaver -no-splash
+
+# Auto run the browser
+@xset s off
+@xset -dpms
+@xset s noblank
+@midori -e Fullscreen -a http://dashboards.bower.porchwebz.com/sample
