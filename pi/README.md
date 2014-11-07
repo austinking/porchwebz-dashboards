@@ -15,3 +15,4 @@ Also, one additional package is needed: `sudo apt-get install unclutter`
  - http://sysmatt.blogspot.com/2014/08/backup-restore-customize-and-clone-your.html
 - Handle network connectivity issues
 - Integrate remote control
+ - http://www.amazon.com/gp/product/B003UE52ME – $20 wireless keyboard with mouse touchpad 
