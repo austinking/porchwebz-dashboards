@@ -14,9 +14,9 @@ Create a new shell
     $ vagrant ssh    
     please run 'export DOCKER_HOST=tcp://172.17.8.101:2375 && export VAGRANT=172.17.8.101'
     $ export DOCKER_HOST=tcp://172.17.8.101:2375 && export VAGRANT=172.17.8.101
-    $ docker run -v=/home/core/share/jobs:/jobs -v=/home/core/share/widgets:/widgets -v=/home/core/share/dashboards:/dashboards -d -p 8080:3030 frvi/dashing
-
-    384c3e628aa88a1f7b1c2bb0beeb7d51d92de82e2d6482a3fc6df778fb7c0403
+    $ docker run -v=/home/core/share/jobs:/jobs -v=/home/core/share/widgets:/widgets -v=/home/core/share/dashboards:/dashboards -v=/home/core/share/assets:/assets -d -p 8080:3030 frvi/dashing
+    
+*note: mounting assets dir was wonky, we got around it by explicitly mounting to /dashing/assets, but needs more investigation as to why it was being handled differently than the other mounted dirs*
 
 You should probably throw `export DOCKER_HOST=tcp://172.17.8.101:2375 && export VAGRANT=172.17.8.101` into your `.bash_profile`
 
