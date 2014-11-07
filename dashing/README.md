@@ -2,7 +2,7 @@
 
 Widgets and such for Dashing.io go here
 
-## Setup
+## Development setup
 
 This directory has the `Vagrantfile` with specifics for working on the dashboard service.
 
@@ -40,3 +40,51 @@ this dockerized dashing.
 
     $ vagrant ssh
     $ sudo systemctl restart docker
+
+
+## Deploying
+
+Unlike our development setup... deployment is a different beast.
+
+We start up a Docker container, shove our code into it, and then commit and publish to our
+private repo.
+
+
+### Setup
+
+    docker login
+
+This creates ~/.docker.cfg. Upload this to a private S3 Bucket
+Grant Read permissions to `Me`.
+
+AWS Elastic Bean Stock then deploys from our private repo.
+
+    cd porchwebz-dashboards/dashing
+    zip ../porchwebz-dashboard.zip -r * .[^.]*
+
+
+CoreOS has /home/core/share with our dashing/ code.
+
+    $ docker run -v=/home/core/share:/share -d -p 8080:3030 frvi/dashing
+    ea481d39ca60
+    $ docker exec -i -t ea481d39ca60 bash
+    # ./copy_code.sh    
+    exit
+
+    #docker commit -m"Update" -a "Austin King" ea481d39ca60 austinking/dashing-deploy
+
+    docker commit -m="Adding henrys widgets" ea481d39ca60 austinking/dashing-deploy:v4
+    docker push austinking/dashing-deploy:v4
+
+
+ Go to [EBS Console](https://console.aws.amazon.com/elasticbeanstalk/?region=us-east-1#/environment/dashboard?applicationName=dashboards.porchwebz.com&environmentId=e-rxcqtwrb6r)
+
+ Upload our Dockerfile.json and bump the version number
+
+
+ ssh into production
+
+    ssh austink@management.prod.porch.com
+    ssh appdocker00.qa
+
+     ssh -i ../porchwebz-dashboards/dashing/porchwebzcom.pem ec2-user@dashboards.bower.porchwebz.com
