@@ -6,17 +6,15 @@ current_organic_visitors = 90726;
 
 SCHEDULER.every '2s' do
 
-  # uri = URI.parse("http://porch-ga-proxy.appspot.com/query?id=ahBzfnBvcmNoLWdhLXByb3h5chULEghBcGlRdWVyeRiAgICAvKGCCgw")
+  uri = URI.parse("http://porch-ga-super-proxy.appspot.com/query?id=ahZzfnBvcmNoLWdhLXN1cGVyLXByb3h5chULEghBcGlRdWVyeRiAgICAgICACgw")
 
-  # response = Net::HTTP.get_response(uri)
+  response = Net::HTTP.get_response(uri)
 	
-  # json = JSON.parse(response.body)
+  json = JSON.parse(response.body)
   
-  # puts response.body
+  puts response.body
   
-  # new_organic_visitors = json["rows"][0][0]
-
-  new_organic_visitors = current_organic_visitors + 100
+  new_organic_visitors = json["rows"][0][0]
 
   last_organic_visitors = current_organic_visitors
 
