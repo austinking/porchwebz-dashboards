@@ -10,9 +10,7 @@ SCHEDULER.every '2s' do
   response = Net::HTTP.get_response(uri)
 	
   json = JSON.parse(response.body)
-  
-  puts response.body
-  
+    
   data = json["rows"]
   
   keywords = Array.new
