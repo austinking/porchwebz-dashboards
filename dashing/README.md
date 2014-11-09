@@ -2,7 +2,29 @@
 
 Widgets and such for Dashing.io go here
 
-## Development setup
+## Development
+
+    $ docker build --tag='porch-dashing:dev' .
+    $ docker images | grep ' dev '
+    porch-dashing              dev                 f2b50ca5ae49        About a minute ago   473.2 MB
+    $ export DASHING_DEV=f2b50ca5ae49
+    $ ./development-server.sh
+
+Development server will launch our development instance with various folders setup for live reload.
+
+**NOTE:** You must do port forwarding for port `3030` and you must share this current folder in the same path on your VirtualBox Docker Server OS. Otherwise use `development-server.sh` as a guide, but run the server directly with different arguments.
+
+## Deployment
+
+
+
+## Docker on Mac OS X
+
+You can use either boot2docker or `porch-vagrant`.
+
+boot2docker is the prefered and supported configuration.
+
+### porch-vagrant tips
 
 This directory has the `Vagrantfile` with specifics for working on the dashboard service.
 
@@ -23,11 +45,11 @@ You should probably throw `export DOCKER_HOST=tcp://172.17.8.101:2375 && export 
 You can now load http://localhost:8080/
 
 
-## Hacking
+## Hacking Tips
 
 If you want to see what is going on inside of the frvi/dashing container, do
 
-    docker exec -i -t 384c3e628aa88a /bin/bash
+    docker exec -i -t porch-dashing /bin/bash
 
 
 See [frvi/dashing](https://registry.hub.docker.com/u/frvi/dashing/) for further configuration and ways to launch
