@@ -24,6 +24,14 @@ You can use either boot2docker or `porch-vagrant`.
 
 boot2docker is the prefered and supported configuration.
 
+### boot2docker tips
+
+You need to tell boot2docker to forward port 3030
+
+    $ boot2docker stop
+    $ VBoxManage modifyvm "boot2docker-vm" --natpf1 "guestnginx,tcp,,3030,,3030"
+    $ boot2docker start
+
 ### porch-vagrant tips
 
 This directory has the `Vagrantfile` with specifics for working on the dashboard service.
