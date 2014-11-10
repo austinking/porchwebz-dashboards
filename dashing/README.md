@@ -12,6 +12,7 @@ Install boot2Docker
 1. Export the things that boot2docker tells you to export
 1. Run these commands
 
+
     $ docker build --tag='porch-dashing:dev' .
     $ docker images | grep ' dev '
     porch-dashing              dev                 f2b50ca5ae49        About a minute ago   473.2 MB
