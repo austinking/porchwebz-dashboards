@@ -10,8 +10,8 @@ Install boot2Docker
 1. Install package
 1. Run boot2docker to initialize VM (it's installed in /Applications)
 1. Export the things that boot2docker tells you to export
-1. Run these commands
 
+run these commands (note you'll have to change the export to the id of the docker instance returne in line 2): 
 
     $ docker build --tag='porch-dashing:dev' .
     $ docker images | grep ' dev '
@@ -24,7 +24,6 @@ Development server will launch our development instance with various folders set
 **NOTE:** You must do port forwarding for port `3030` and you must share this current folder in the same path on your VirtualBox Docker Server OS. Otherwise use `development-server.sh` as a guide, but run the server directly with different arguments.
 
 ## Deployment
-
 
 
 ## Docker on Mac OS X
