@@ -4,6 +4,14 @@ Widgets and such for Dashing.io go here
 
 ## Development
 
+Install boot2Docker
+
+1. Download boot2docker here: http://boot2docker.io/
+1. Install package
+1. Run boot2docker to initialize VM (it's installed in /Applications)
+1. Export the things that boot2docker tells you to export
+1. Run these commands
+
     $ docker build --tag='porch-dashing:dev' .
     $ docker images | grep ' dev '
     porch-dashing              dev                 f2b50ca5ae49        About a minute ago   473.2 MB
