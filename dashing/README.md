@@ -82,47 +82,28 @@ this dockerized dashing.
 
 ## Deploying
 
-Unlike our development setup... deployment is a different beast.
+Unlike our development setup... deployment is a slightly different beast.
 
-We start up a Docker container, shove our code into it, and then commit and publish to our
-private repo.
-
-
-### Setup
-
-    docker login
-
-This creates ~/.docker.cfg. Upload this to a private S3 Bucket
-Grant Read permissions to `Me`.
-
-AWS Elastic Bean Stock then deploys from our private repo.
-
-    cd porchwebz-dashboards/dashing
-    zip ../porchwebz-dashboard.zip -r * .[^.]*
+We update our got in git to a certain state and then build an image and launch it.
 
 
-CoreOS has /home/core/share with our dashing/ code.
+## Setup
 
-    $ docker run -v=/home/core/share:/share -d -p 8080:3030 frvi/dashing
-    ea481d39ca60
-    $ docker exec -i -t ea481d39ca60 bash
-    # ./copy_code.sh    
-    exit
-
-    #docker commit -m"Update" -a "Austin King" ea481d39ca60 austinking/dashing-deploy
-
-    docker commit -m="Adding henrys widgets" ea481d39ca60 austinking/dashing-deploy:v4
-    docker push austinking/dashing-deploy:v4
+    $ ssh management.prod.porch.com
+    $ ssh appdocker00.prod
+    $ git clone https://github.com/austinking/porchwebz-dashboards.git
+    $ cd porchwebz-dashboards/dashing/
+    $ sudo docker pull frvi/dashing
 
 
- Go to [EBS Console](https://console.aws.amazon.com/elasticbeanstalk/?region=us-east-1#/environment/dashboard?applicationName=dashboards.porchwebz.com&environmentId=e-rxcqtwrb6r)
+## Deploying new code
+    $ git pull origin master
+    $ sudo docker build --tag=porch/dashboards:latest .
+    Successfully built da6e21eb536c    
+    $ sudo ./production-server.sh
 
- Upload our Dockerfile.json and bump the version number
+## Stop / Restart / View logs
 
-
- ssh into production
-
-    ssh austink@management.prod.porch.com
-    ssh appdocker00.qa
-
-     ssh -i ../porchwebz-dashboards/dashing/porchwebzcom.pem ec2-user@dashboards.bower.porchwebz.com
+    $ sudo docker start porch-dashboards
+    $ sudo docker logs -f porch-dashboards
+    $ sudo docker stop porch-dashboards
