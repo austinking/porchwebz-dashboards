@@ -2,11 +2,11 @@ require "net/http"
 require "uri"
 require "json"
 
-current_organic_visitors = 0; 
+current_organic_visitors = 90726; 
 
-SCHEDULER.every '2s' do
+SCHEDULER.every '10m' do
 
-  uri = URI.parse("http://porch-ga-proxy.appspot.com/query?id=ahBzfnBvcmNoLWdhLXByb3h5chULEghBcGlRdWVyeRiAgICAvKGCCgw")
+  uri = URI.parse("http://porch-ga-super-proxy.appspot.com/query?id=ahZzfnBvcmNoLWdhLXN1cGVyLXByb3h5chULEghBcGlRdWVyeRiAgICAgICACgw")
 
   response = Net::HTTP.get_response(uri)
 	

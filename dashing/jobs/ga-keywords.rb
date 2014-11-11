@@ -3,16 +3,14 @@ require "uri"
 require "json"
 
 
-SCHEDULER.every '2s' do
+SCHEDULER.every '10m' do
 
-  uri = URI.parse("http://porch-ga-proxy.appspot.com/query?id=ahBzfnBvcmNoLWdhLXByb3h5chULEghBcGlRdWVyeRiAgICA3pCBCgw")
+  uri = URI.parse("http://porch-ga-super-proxy.appspot.com/query?id=ahZzfnBvcmNoLWdhLXN1cGVyLXByb3h5chULEghBcGlRdWVyeRiAgICA-JaVCgw")
 
   response = Net::HTTP.get_response(uri)
 	
   json = JSON.parse(response.body)
-  
-  puts response.body
-  
+    
   data = json["rows"]
   
   keywords = Array.new
