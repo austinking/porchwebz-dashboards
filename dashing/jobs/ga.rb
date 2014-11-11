@@ -4,7 +4,7 @@ require "json"
 
 current_organic_visitors = 90726; 
 
-SCHEDULER.every '2s' do
+SCHEDULER.every '10m' do
 
   uri = URI.parse("http://porch-ga-super-proxy.appspot.com/query?id=ahZzfnBvcmNoLWdhLXN1cGVyLXByb3h5chULEghBcGlRdWVyeRiAgICAgICACgw")
 
