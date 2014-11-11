@@ -3,10 +3,9 @@ require "uri"
 require "json"
 
 
-SCHEDULER.every '10m' do
+SCHEDULER.every '1m' do
 
   uri = URI.parse("http://porch-ga-super-proxy.appspot.com/query?id=ahZzfnBvcmNoLWdhLXN1cGVyLXByb3h5chULEghBcGlRdWVyeRiAgICA-JaVCgw")
-
   response = Net::HTTP.get_response(uri)
 	
   json = JSON.parse(response.body)
@@ -21,7 +20,7 @@ SCHEDULER.every '10m' do
       value: keyword[1]
     })
   end
-     
+  
   send_event('ga_top_keywords', { items: keywords })
   
 end
