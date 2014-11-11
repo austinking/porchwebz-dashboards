@@ -18,7 +18,6 @@ SCHEDULER.every '10m' do
   current_pro_pages = pages
   
   
-  
   send_event("pros_organic_traffic", { current: current_pro_pages, last: last_pro_pages })
   
 end
