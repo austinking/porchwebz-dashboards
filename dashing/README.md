@@ -38,7 +38,7 @@ Unlike our development setup... deployment is a slightly different beast.
 We update our code in git to a certain state and then build an image and launch it.
 
 
-## One Time Setup
+## Initial Setup
 
     $ ssh management.prod.porch.com
     $ ssh appdocker00.prod
@@ -46,7 +46,7 @@ We update our code in git to a certain state and then build an image and launch 
     $ cd porchwebz-dashboards/dashing/
     $ sudo docker pull frvi/dashing
 
-## Deploying Service
+## How to Deploy the Service
 
     $ ssh management.prod.porch.com
     $ ssh appdocker00.prod
@@ -54,15 +54,9 @@ We update our code in git to a certain state and then build an image and launch 
     $ git pull origin master
     $ docker stop porch-dashboards
     $ docker rm porch-dashboards    
-    $ sudo docker build --tag=porch/dashboards:latest .
+    $ docker build --tag=porch/dashboards:latest .
     Successfully built da6e21eb536c    
-    $ sudo ./production-server.sh
-
-## Stop / Restart / View logs
-
-    $ sudo docker start porch-dashboards
-    
-    $ sudo docker stop porch-dashboards
+    $ ./production-server.sh
 
 ## Troubleshooting
 
