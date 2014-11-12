@@ -10,6 +10,8 @@ Assuming your in the `dashing` directory
     $ ./development-server.sh
     6f20e02420afd214ae97cefeb8d4bc5a21f3207b3ecec2e7621137fd1c477fdc
     $ docker restart porch-dashboard
+    $ docker logs -f porch-dashboard
+    $ docker exec -i -t porch-dashboard /bin/bash
 
 Development server will launch our development instance with various folders setup for live reload.
 
@@ -29,20 +31,46 @@ You need to tell boot2docker to forward port 3030
     $ VBoxManage modifyvm "boot2docker-vm" --natpf1 "guestnginx,tcp,,3030,,3030"
     $ boot2docker start
 
-## Hacking Tips
+## Deploying
 
-If you want to see what is going on inside of the frvi/dashing container, do
+Unlike our development setup... deployment is a slightly different beast.
 
-    docker exec -i -t porch-dashboard /bin/bash
+We update our code in git to a certain state and then build an image and launch it.
 
+
+## One Time Setup
+
+    $ ssh management.prod.porch.com
+    $ ssh appdocker00.prod
+    $ git clone https://github.com/austinking/porchwebz-dashboards.git
+    $ cd porchwebz-dashboards/dashing/
+    $ sudo docker pull frvi/dashing
+
+## Deploying Service
+
+    $ ssh management.prod.porch.com
+    $ ssh appdocker00.prod
+    $ cd  porchwebz-dashboards/dashing/
+    $ git pull origin master
+    $ docker stop porch-dashboards
+    $ docker rm porch-dashboards    
+    $ sudo docker build --tag=porch/dashboards:latest .
+    Successfully built da6e21eb536c    
+    $ sudo ./production-server.sh
+
+## Stop / Restart / View logs
+
+    $ sudo docker start porch-dashboards
+    
+    $ sudo docker stop porch-dashboards
+
+## Troubleshooting
 
 See [frvi/dashing](https://registry.hub.docker.com/u/frvi/dashing/) for further configuration and ways to launch
 this dockerized dashing.
 
 
-## Troubleshooting
-
-* docker server isn't running in CoreOS
+* I'm using `porch-vagrant` and docker server isn't running in CoreOS
 
     $ vagrant ssh
     $ sudo systemctl restart docker
@@ -57,32 +85,3 @@ this dockerized dashing.
     e981921613432574a65b7e5108b6bca9adeebc1e61086345a6a41a3d47f47758
 
 The `docker rm` with the container id in the error message will fix this.
-
-## Deploying
-
-Unlike our development setup... deployment is a slightly different beast.
-
-We update our got in git to a certain state and then build an image and launch it.
-
-
-## Setup
-
-    $ ssh management.prod.porch.com
-    $ ssh appdocker00.prod
-    $ git clone https://github.com/austinking/porchwebz-dashboards.git
-    $ cd porchwebz-dashboards/dashing/
-    $ sudo docker pull frvi/dashing
-
-
-## Deploying new code
-    $ git pull origin master
-    $ docker rmi porch/dashboards:latest
-    $ sudo docker build --tag=porch/dashboards:latest .
-    Successfully built da6e21eb536c    
-    $ sudo ./production-server.sh
-
-## Stop / Restart / View logs
-
-    $ sudo docker start porch-dashboards
-    $ sudo docker logs -f porch-dashboards
-    $ sudo docker stop porch-dashboards
