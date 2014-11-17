@@ -6,4 +6,4 @@
 @xset s off
 @xset -dpms
 @xset s noblank
-@midori -e Fullscreen -a http://dashboards.bower.porchwebz.com/sample
+@midori -e Fullscreen -a http://dashboards.porchwebz.com/tv
