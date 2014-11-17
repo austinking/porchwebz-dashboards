@@ -14,6 +14,7 @@ Example: Organic search in the last 30 days
 
 module.exports = {
 	period: 'monthly',
+    dashboards: ['http://dashboards.porchwebz.com/pro'],
 	calculate: function(fromDate, toDate, cb) {
         ...
         cb(null, 42);

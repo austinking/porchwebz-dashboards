@@ -8,4 +8,9 @@ RUN apt-get install -y sqlite
 
 RUN npm install sqlite3
 
+ADD src/etc/crontab /root/crontab
+RUN crontab -u root /root/crontab
+
 EXPOSE 3031
+
+CMD ["node","/data/src/bin/metrics_pump.js"]

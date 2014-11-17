@@ -1,2 +1,4 @@
 #!/bin/bash
-docker run --name='metrics-pump' -it --rm --volume=`pwd`/src:/src porch/metrics-pump:latest
+docker stop metrics-pump
+docker rm metrics-pump
+docker run -d -it --name='metrics-pump' --volume=`pwd`/src:/data/src porch/metrics-pump:latest
