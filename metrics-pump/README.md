@@ -14,6 +14,7 @@ Example: Organic search in the last 30 days
 
 module.exports = {
 	period: 'monthly',
+    interval: 'daily',
     dashboards: ['http://dashboards.porchwebz.com/pro'],
 	calculate: function(fromDate, toDate, cb) {
         ...
@@ -31,7 +32,8 @@ the first argument to the callback is an error. Example:
     }
 
 When your NodeJs module is run, your code should calculate the total number of organic searches
-conducted between now and 30 days ago. It should also figure out the total number of organic searches
+conducted between now and 30 days ago. It would actually be called twice... another call
+would have different fromDate and toDate to figure out the total number of organic searches
 conducted between 30 days ago and 60 days ago.
 
 The metrics pump plugin will do the following:
@@ -42,11 +44,31 @@ The metrics pump plugin will do the following:
 
 ## Periods
 
+How large of a window is used to calculate the current metric?
+
 A metric window can be any of the following:
-* Daily (24 hours)
-* Weekly (7 days)
-* Monthly (30 days)
-* Quarterly
+
+* Daily (24 hours) (Example: 3 % increase since Monday)
+* Weekly (7 days) (Example: 3% increase since last Tuesday)
+* Monthly (30 days) (Example: 3% increase since Nov)
+* Quarterly (Example: 3% increase since July)
+
+## Intervals
+
+How frequently is the metric re-calculated
+
+* daily (runs at 4am)
+* hourly
+* minute
+
+## Development
+
+### Running Development
+    ./development-server.sh
+
+### Bash shell
+
+    docker exec -it metrics-pump bash
 
 ## Design
 
