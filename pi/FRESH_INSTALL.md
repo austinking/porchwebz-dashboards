@@ -31,8 +31,11 @@ Sign into the pi, then
     $ sudo ifup eth0
     $ sudo apt-get update 
     $ sudo aptitude install -y midori mg vim
+    $ git clone https://github.com/austinking/porchwebz-dashboards.git
+    $ cd porchwebz-dashboards/pi
+    $ ./install.sh
 
-
+`install.sh` will backup config files to /home/pi
 
 
 ## Keyboard + TV tips
