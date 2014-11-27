@@ -12,3 +12,8 @@
 var setupDb = require('../lib/setup_db');
 
 setupDb();
+
+// Keep our VM from exiting...
+setInterval(function() {
+
+}, 10000);
