@@ -1,0 +1,6 @@
+# HOME=/root
+# LOGNAME=root
+# PATH=/usr/bin:/bin
+# SHELL=/bin/sh
+# PWD=/root
+*     *     *     *     *  /usr/local/bin/node /data/src/bin/cronjob.js >> /data/src/logs/cronjob.log 2>&1

@@ -10,10 +10,13 @@ RUN npm install sqlite3
 
 ADD src/etc/crontab /root/crontab
 RUN crontab -u root /root/crontab
+ADD src /data/src
 
 RUN mkdir /data/logs
 
 EXPOSE 3031
 
-#CMD ["node","/data/src/bin/metrics_pump.js"]
-CMD ["node", "/data/src/bin/cronjob.js"]
+RUN ["node", "/data/src/bin/cronjob.js"]
+
+CMD ["node","/data/src/bin/metrics_pump.js"]
+#CMD 

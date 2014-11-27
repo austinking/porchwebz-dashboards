@@ -12,15 +12,18 @@ Example: Organic search in the last 30 days
 
 ## API
 
+// ga-organic.js
 module.exports = {
 	period: 'monthly',
     interval: 'daily',
-    dashboards: ['http://dashboards.porchwebz.com/pro'],
+    dashboards: ['http://dashboards.porchwebz.com/pro/ga-organic'],
 	calculate: function(fromDate, toDate, cb) {
         ...
         cb(null, 42);
     }
 };
+
+The filename is important and becomes the name of the metric.
 
 If errors are encountered, or if you cannot calculate metrics for the period given,
 the first argument to the callback is an error. Example:
@@ -75,3 +78,19 @@ How frequently is the metric re-calculated
 A cronjob triggers modules to run.
 
 [ ] Previously failed metrics are retried. State is stored in the DB.
+
+
+## Graphite
+
+[Graphite](https://registry.hub.docker.com/u/hopsoft/graphite-statsd/) is used for storing quickly graphing data.
+
+Metrics are prefixed with `dashboard.{interval}.{plugin-name}`.
+
+1 minute for 2 hours (120 points)
+10 minutes for 2 weeks (2016 points)
+
+
+1 minute for 30 days (43,200 points)
+15 minute for 10 years
+4 * 24 * 365 * 10 (350,000 points)
+
