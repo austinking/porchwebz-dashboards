@@ -6,7 +6,7 @@ RUN apt-get update
 
 RUN apt-get install -y sqlite cron
 
-RUN npm install sqlite3
+RUN npm install sqlite3 underscore
 
 ADD src/etc/crontab /root/crontab
 RUN crontab -u root /root/crontab
