@@ -6,7 +6,7 @@ var _ = require('underscore');
 const graphite = {
 	protocol: 'http',
 	port: 2003,
-	webPort: 8080,
+	webPort: 80,
 	host: '192.168.59.103'
 }
 
@@ -17,6 +17,7 @@ with (graphite) {
 
 
 module.exports = function(metricName, interval, time, cb) {
+    console.log(arguments);
 	time = typeof time === 'object' ? Math.round(time.getTime() / 1000) : time;
 
 	var fullMetricName = 'dashboards.' +  interval + '.' + metricName;
@@ -27,6 +28,8 @@ module.exports = function(metricName, interval, time, cb) {
 		fullMetricName,
 		'&rawData=true'
 	].join('');
+
+console.log('retreiving', url);
 
     http.get(url, function(res) {
         var buf = "";
@@ -41,6 +44,7 @@ module.exports = function(metricName, interval, time, cb) {
 	});
 
 	function parseResponse(py) {
+        //console.log('parsing', py.substring(0, 10));
         var parts = py.split(',');        
         return _.map(parts, function(val) {
         	var v = val.trim();

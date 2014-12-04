@@ -6,17 +6,22 @@ RUN apt-get update
 
 RUN apt-get install -y sqlite cron
 
-RUN npm install sqlite3 underscore
+RUN npm install sqlite3 underscore request
 
 ADD src/etc/crontab /root/crontab
 RUN crontab -u root /root/crontab
 ADD src /data/src
 
-RUN mkdir /data/logs
+RUN mkdir -p /data/src/logs
 
 EXPOSE 3031
 
+RUN echo `date "+%s"`
+
 RUN ["node", "/data/src/bin/cronjob.js"]
 
-CMD ["node","/data/src/bin/metrics_pump.js"]
-#CMD 
+RUN ps aux
+
+# RUN ["node","/data/src/bin/metrics_pump.js"]
+
+CMD cron -f
