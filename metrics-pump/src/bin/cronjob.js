@@ -6,6 +6,8 @@
 var fs = require('fs');
 var path = require('path');
 
+var async = require('async');
+
 var roundMinute = require('../lib/round-minute');
 var readGraphite = require('../lib/read-graphite');
 var sendToDashboard = require('../lib/send-dashing');
@@ -22,56 +24,55 @@ var plugins = [
   ]
 ];
 
-plugins.forEach(function(pluginPath) {
-	var pluginName= pluginPath[0];
-	var plugin = require(pluginPath[1]);
-	var now = roundMinute();
-        
-    if (true || shouldPluginRun(plugin, now)) {
-
-    	readGraphite(pluginName, plugin.interval, now, function(err, oldData) {       
-	        // BUG: last value could be null and for our current timestamp
-	        var prev = oldData[oldData.length - 2];        
-	        var last = prev || 'Nil';
-
-			var then = subtractPeriod(plugin.period, now);
-
-			plugin.calculate(then, now, function(err, val) {
-				if (err) {
-					return;
-				}				
-				sendToGraphite(pluginName, plugin.interval, val, now, function(err) {
-					if (err) {
-						// send to statsd
-						return console.log(err);
-					}
-					// Only update the dashboard on success
-					plugin.dashboards.forEach(function(widgetName) {
-						sendToDashboard(widgetName, {
-							title: 'Random Walk',
-							current: Math.round(val),
-							last: last,
-							moreinfo: 'A random value every minute.'					
-						});
-					});
-				});
-			});
-		});
-	} else {
-		console.log('Skipping', pluginName);
-	}
-
-// * read recent data from graphite
+// TODO / Ideas
 // * trigger backfill?
 // * dashing.io cold start -> url that causes udpates to be posted back
-	
-});
+// BUG: last value could be null and for our current timestamp
 
-function recordMetrics(plugin) {
-	return function(err, metric) {
-		if (err) {
-			console.log(plugin, err);
-			return;
-		}		
-	}
+async.eachLimit(plugins, 3, function(pluginPath, pluginCb) {
+    var pluginName= pluginPath[0];
+    var plugin = require(pluginPath[1]);
+    var now = roundMinute();
+    var last, val;
+        
+    if (false || shouldPluginRun(plugin, now) === false) {
+        console.log('Skipping', pluginName);
+        return;
+    }
+    async.waterfall([
+        function(cb) {
+            readGraphite(pluginName, plugin.interval, now, cb);
+        },
+        function(oldData, cb) {                            
+            var prev = oldData[oldData.length - 2];        
+            var then = subtractPeriod(plugin.period, now);
+            last = prev || 'Nil';
+            plugin.calculate(then, now, cb);
+        },
+        function(aVal, cb) {
+            console.log('aVal=', aVal);
+            val = aVal;
+            sendToGraphite(pluginName, plugin.interval, val, now, cb);
+        },
+        function(cb) {
+            console.log('aVal=', val);
+            async.eachSeries(plugin.dashboards, function(widgetName) {
+                sendToDashboard(widgetName, {
+                    title: 'Random Walk',
+                    current: Math.round(val),
+                    last: last,
+                    moreinfo: 'A random value every minute.'                    
+                });
+            }, cb);
+        }],
+        function(err) {
+            reportErrors(err);
+            pluginCb();
+        });
+}, reportErrors);
+
+function reportErrors(err) {
+    if (err) {
+        console.log(err);
+    }
 }

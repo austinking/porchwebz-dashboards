@@ -17,7 +17,7 @@ module.exports = {
     interval: 'minute',
     dashboards: ['random-walk'],
 	calculate: function(fromDate, toDate, cb) {
-		var val = pos + (Math.random() * 10) - 5;
+		var val = (Math.random() * 6) - 3;
 		pos += val;		
         cb(null, val);
         fs.writeFile(STATE_FILE, "" + pos, function(err) { console.log(err); });
