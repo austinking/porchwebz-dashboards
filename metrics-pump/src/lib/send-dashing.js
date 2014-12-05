@@ -12,7 +12,15 @@ const dashing = {
 	authToken: 'YOUR_AUTH_TOKEN'
 };
 
+/**
+ * payload values for a dashing Number widget:
+ * title - metric name
+ * current - current numeric value
+ * moreinfo - small message for context
+ * Dashboard takes care of 'difference', 'up/down arrow', and 'Last Updated'
+ */
 module.exports = function (widgetName, payload) {
+    console.log(arguments);
     payload['auth_token'] = dashing.authToken;
     var url;
     with (dashing) {
